@@ -1,4 +1,6 @@
 package lk.ijse.dreambabycareprojectinlayered.bo.custom.impl;
 
-public class ProductionBOImpl {
+import lk.ijse.dreambabycareprojectinlayered.bo.custom.ProductionBO;
+
+public class ProductionBOImpl implements ProductionBO {
 }

@@ -1,4 +1,6 @@
 package lk.ijse.dreambabycareprojectinlayered.bo.custom.impl;
 
-public class InventoryBOImpl {
+import lk.ijse.dreambabycareprojectinlayered.bo.custom.InventoryBO;
+
+public class InventoryBOImpl implements InventoryBO {
 }

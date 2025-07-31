@@ -1,4 +1,6 @@
 package lk.ijse.dreambabycareprojectinlayered.bo.custom.impl;
 
-public class DiscountBOImpl {
+import lk.ijse.dreambabycareprojectinlayered.bo.custom.DiscountBO;
+
+public class DiscountBOImpl implements DiscountBO {
 }

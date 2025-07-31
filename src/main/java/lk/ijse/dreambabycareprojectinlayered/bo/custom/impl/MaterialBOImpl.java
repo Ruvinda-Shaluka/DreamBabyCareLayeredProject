@@ -1,4 +1,6 @@
 package lk.ijse.dreambabycareprojectinlayered.bo.custom.impl;
 
-public class MaterialBOImpl {
+import lk.ijse.dreambabycareprojectinlayered.bo.custom.MaterialBO;
+
+public class MaterialBOImpl implements MaterialBO {
 }

@@ -1,4 +1,6 @@
 package lk.ijse.dreambabycareprojectinlayered.bo.custom.impl;
 
-public class SupplierBOImpl {
+import lk.ijse.dreambabycareprojectinlayered.bo.custom.SupplierBO;
+
+public class SupplierBOImpl implements SupplierBO {
 }

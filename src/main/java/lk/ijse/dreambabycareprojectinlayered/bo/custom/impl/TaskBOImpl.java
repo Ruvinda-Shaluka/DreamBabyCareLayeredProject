@@ -1,4 +1,6 @@
 package lk.ijse.dreambabycareprojectinlayered.bo.custom.impl;
 
-public class TaskBOImpl {
+import lk.ijse.dreambabycareprojectinlayered.bo.custom.TaskBO;
+
+public class TaskBOImpl implements TaskBO {
 }

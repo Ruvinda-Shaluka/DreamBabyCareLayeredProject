@@ -2,5 +2,5 @@ package lk.ijse.dreambabycareprojectinlayered.bo.custom;
 
 import lk.ijse.dreambabycareprojectinlayered.bo.SuperBO;
 
-public interface ProductionTaskBO extends SuperBO {
+public interface PlaceOrderBO extends SuperBO {
 }

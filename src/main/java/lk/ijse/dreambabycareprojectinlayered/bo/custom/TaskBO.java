@@ -1,4 +1,6 @@
 package lk.ijse.dreambabycareprojectinlayered.bo.custom;
 
-public interface TaskBO {
+import lk.ijse.dreambabycareprojectinlayered.bo.SuperBO;
+
+public interface TaskBO extends SuperBO {
 }

@@ -1,4 +1,6 @@
 package lk.ijse.dreambabycareprojectinlayered.bo.custom.impl;
 
-public class UserBOImpl {
+import lk.ijse.dreambabycareprojectinlayered.bo.custom.UserBO;
+
+public class UserBOImpl implements UserBO {
 }

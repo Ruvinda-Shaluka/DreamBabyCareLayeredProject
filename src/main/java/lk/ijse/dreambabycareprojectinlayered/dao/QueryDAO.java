@@ -1,4 +1,4 @@
 package lk.ijse.dreambabycareprojectinlayered.dao;
 
-public interface QueryDAO {
+public interface QueryDAO extends SuperDAO {
 }

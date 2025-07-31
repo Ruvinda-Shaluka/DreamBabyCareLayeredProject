@@ -1,4 +1,6 @@
 package lk.ijse.dreambabycareprojectinlayered.bo.custom;
 
-public interface OrdersBO {
+import lk.ijse.dreambabycareprojectinlayered.bo.SuperBO;
+
+public interface OrdersBO extends SuperBO {
 }

@@ -1,4 +1,6 @@
 package lk.ijse.dreambabycareprojectinlayered.bo.custom.impl;
 
-public class EmployeeBOImpl {
+import lk.ijse.dreambabycareprojectinlayered.bo.custom.EmployeeBO;
+
+public class EmployeeBOImpl implements EmployeeBO {
 }
