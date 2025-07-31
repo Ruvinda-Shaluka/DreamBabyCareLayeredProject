@@ -60,9 +60,6 @@ public class OrderItemModel {
         return orderItemDtoArrayList;
     }
     public ArrayList<OrderItemDto> getAllOrderItems() throws ClassNotFoundException, SQLException{
-        Connection connection = DBConnection.getInstance().getConnection();
-        String sql = "SELECT * FROM order_item";
-        PreparedStatement statement = connection.prepareStatement(sql);
 
         ResultSet rst = CrudUtil.execute("SELECT * FROM order_item");
         ArrayList<OrderItemDto> orderItemDto = new ArrayList<>();
