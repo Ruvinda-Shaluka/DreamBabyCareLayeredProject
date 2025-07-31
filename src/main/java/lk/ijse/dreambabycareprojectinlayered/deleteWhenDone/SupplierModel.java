@@ -20,7 +20,7 @@ public class SupplierModel {
     }
     public boolean updateSuppliers(SupplierDto supplierDto) throws ClassNotFoundException, SQLException{
 
-                return CrudUtil.execute(
+        return CrudUtil.execute(
                 "UPDATE supplier SET name = ?, contact = ?, account_details = ? WHERE supplier_id= ?",
                 supplierDto.getName(),
                 supplierDto.getContact(),
