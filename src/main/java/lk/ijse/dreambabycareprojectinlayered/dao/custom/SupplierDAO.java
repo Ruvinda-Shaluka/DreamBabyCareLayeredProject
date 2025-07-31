@@ -1,4 +1,7 @@
 package lk.ijse.dreambabycareprojectinlayered.dao.custom;
 
-public interface SupplierDAO {
+import lk.ijse.dreambabycareprojectinlayered.dao.CrudDAO;
+import lk.ijse.dreambabycareprojectinlayered.entity.SupplierEntity;
+
+public interface SupplierDAO extends CrudDAO<SupplierEntity> {
 }

@@ -71,10 +71,10 @@ public class CustomerDAOImpl implements CustomerDAO {
         ResultSet resultSet = SQLUtil.executeQuery("SELECT customer_id FROM customer ORDER BY customer_id DESC LIMIT 1");
         if (resultSet.next()) {
             String id = resultSet.getString("customer_id");
-            int newCustomerId = Integer.parseInt(id.replace("C00-", "")) + 1;
-            return String.format("C00-%03d", newCustomerId);
+            int newCustomerId = Integer.parseInt(id.replace("CUS", "")) + 1;
+            return String.format("CUS%03d", newCustomerId);
         } else {
-            return "C00-001";
+            return "CUS001";
         }
     }
 
