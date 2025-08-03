@@ -1,6 +1,18 @@
 package lk.ijse.dreambabycareprojectinlayered.bo.custom;
 
 import lk.ijse.dreambabycareprojectinlayered.bo.SuperBO;
+import lk.ijse.dreambabycareprojectinlayered.dto.TaskDto;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public interface TaskBO extends SuperBO {
+    public ArrayList<TaskDto> loadAll() throws Exception;
+    public boolean save(TaskDto dto) throws Exception;
+    public boolean update(TaskDto dto) throws Exception;
+    public boolean delete(String id) throws Exception;
+    public boolean exists(String id) throws Exception;
+    public ArrayList<TaskDto> search(String text) throws Exception;
+    public String generateNewId() throws Exception;
+    public ArrayList<String> getAllEmployeeIds() throws SQLException, ClassNotFoundException;
 }

@@ -1,9 +1,6 @@
 package lk.ijse.dreambabycareprojectinlayered.bo;
 
 import lk.ijse.dreambabycareprojectinlayered.bo.custom.impl.*;
-import lk.ijse.dreambabycareprojectinlayered.dao.DAOFactory;
-import lk.ijse.dreambabycareprojectinlayered.dao.SuperDAO;
-import lk.ijse.dreambabycareprojectinlayered.dao.custom.impl.*;
 
 public class BOFactory {
     private static BOFactory boFactory;

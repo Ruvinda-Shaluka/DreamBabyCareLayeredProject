@@ -13,5 +13,4 @@ public interface InventoryDAO extends CrudDAO<InventoryEntity> {
     public String getItemNameById(String itemId);
     public boolean increaseInventoryQty(String itemId, int amount);
 
-
 }
