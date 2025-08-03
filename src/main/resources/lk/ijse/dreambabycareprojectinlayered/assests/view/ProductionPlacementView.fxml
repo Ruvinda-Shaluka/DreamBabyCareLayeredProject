@@ -298,7 +298,7 @@
                     <columns>
                         <TableColumn fx:id="colEmployeeName" prefWidth="140.79998111724854" text="Employee Name" />
                         <TableColumn fx:id="colItemName" prefWidth="138.13336181640625" text="Item Name" />
-                  <TableColumn fx:id="colProductDescription" prefWidth="224.79998779296875" text="Product Description" />
+                        <TableColumn fx:id="colProductDescription" prefWidth="224.79998779296875" text="Product Description" />
                         <TableColumn fx:id="colQuantity" prefWidth="81.60003662109375" text="Qty" />
                         <TableColumn fx:id="colTaskDescription" prefWidth="224.79998779296875" text="Task Description" />
                         <TableColumn fx:id="colMaterialName" prefWidth="137.5999755859375" text="Material" />
