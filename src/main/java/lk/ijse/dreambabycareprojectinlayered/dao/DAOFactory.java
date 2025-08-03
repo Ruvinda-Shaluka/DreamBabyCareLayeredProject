@@ -16,7 +16,7 @@ public class DAOFactory {
         TASK, USER;
     }
 
-    public SuperDAO getDao(DAOTypes daoType) {
+    public SuperDAO getDAO(DAOTypes daoType) {
         switch (daoType) {
             case CUSTOMER:
                 return new CustomerDAOImpl();
