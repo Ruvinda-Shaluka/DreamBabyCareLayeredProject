@@ -86,12 +86,6 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public ArrayList<String> getCustomerIdByPartialContact(String contact) throws Exception {
-        ArrayList<String> customerIds = customerDAO.getCustomerIdByPartialContact(contact);
-        if (customerIds == null) {
-            return new ArrayList<>();
-        }else {
-            return customerIds;
-        }
-
+        return customerDAO.getCustomerIdByPartialContact(contact);
     }
 }
