@@ -58,15 +58,23 @@ public class InventoryDAOImpl implements InventoryDAO {
     }
 
     @Override
-    public String getItemNameById(String itemId) {
+    public InventoryEntity getItemNameById(String itemId) {
         try {
-            ResultSet resultSet = SQLUtil.executeQuery("SELECT item_name FROM inventory WHERE inventory_id = ?", itemId);
+            ResultSet resultSet = SQLUtil.executeQuery("SELECT * FROM inventory WHERE inventory_id = ?", itemId);
             if (resultSet.next()) {
-                return resultSet.getString("item_name");
+                return new InventoryEntity(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getDouble(5),
+                        resultSet.getInt(6),
+                        resultSet.getString(7)
+                );
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Failed to load item name by ID...").show();
+            new Alert(Alert.AlertType.ERROR, "Fail to load items by Item ID...").show();
         }
         return null;
     }

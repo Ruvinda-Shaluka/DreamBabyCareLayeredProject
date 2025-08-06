@@ -17,7 +17,7 @@ public interface InventoryBO extends SuperBO {
     public ArrayList<String> getAllItemIds() throws SQLException, ClassNotFoundException;
     public boolean reduceItemQty(String itemId, int cartQty);
     public ArrayList<String> getAllInventoryIds() throws SQLException, ClassNotFoundException;
-    public String getItemNameById(String itemId);
+    public InventoryDto getItemNameById(String itemId);
     public boolean increaseInventoryQty(String itemId, int amount);
 
 }

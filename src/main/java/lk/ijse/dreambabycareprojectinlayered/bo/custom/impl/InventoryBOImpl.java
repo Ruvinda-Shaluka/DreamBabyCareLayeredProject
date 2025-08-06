@@ -104,8 +104,20 @@ public class InventoryBOImpl implements InventoryBO {
     }
 
     @Override
-    public String getItemNameById(String itemId) {
-        return inventoryDAO.getItemNameById(itemId);
+    public InventoryDto getItemNameById(String itemId) {
+        InventoryEntity entity = inventoryDAO.getItemNameById(itemId);
+        if (entity != null) {
+            return new InventoryDto(
+                    entity.getInventory_id(),
+                    entity.getItem_name(),
+                    entity.getPrinted_embroidered(),
+                    entity.getSize(),
+                    entity.getUnit_price(),
+                    entity.getQuantity_available(),
+                    entity.getStored_location()
+            );
+        }
+        return null;
     }
 
     @Override

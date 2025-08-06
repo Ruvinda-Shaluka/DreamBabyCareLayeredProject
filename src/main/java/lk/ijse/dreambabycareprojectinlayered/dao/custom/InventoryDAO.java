@@ -10,7 +10,7 @@ public interface InventoryDAO extends CrudDAO<InventoryEntity> {
     public ArrayList<String> getAllItemIds() throws SQLException, ClassNotFoundException;
     public boolean reduceItemQty(String itemId, int cartQty);
     public ArrayList<String> getAllInventoryIds() throws SQLException, ClassNotFoundException;
-    public String getItemNameById(String itemId);
+    public InventoryEntity getItemNameById(String itemId);
     public boolean increaseInventoryQty(String itemId, int amount);
 
 }
