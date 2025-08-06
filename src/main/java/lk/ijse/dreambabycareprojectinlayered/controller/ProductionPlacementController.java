@@ -11,10 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import lk.ijse.dreambabycareprojectinlayered.bo.BOFactory;
 import lk.ijse.dreambabycareprojectinlayered.bo.custom.PlaceProductionBO;
 import lk.ijse.dreambabycareprojectinlayered.db.DBConnection;
-import lk.ijse.dreambabycareprojectinlayered.dto.MaterialUsageDto;
-import lk.ijse.dreambabycareprojectinlayered.dto.ProductionDto;
-import lk.ijse.dreambabycareprojectinlayered.dto.ProductionTaskDto;
-import lk.ijse.dreambabycareprojectinlayered.dto.TaskDto;
+import lk.ijse.dreambabycareprojectinlayered.dto.*;
 import lk.ijse.dreambabycareprojectinlayered.view.tdm.ProductionCartTM;
 
 import java.net.URL;
@@ -117,7 +114,8 @@ public class ProductionPlacementController implements Initializable {
         cmbInventoryId.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 try {
-                    lblItemName.setText(placeProductionBO.getItemNameById((String) newVal));
+                    InventoryDto dto = placeProductionBO.getItemNameById((String) newVal);
+                    lblItemName.setText(dto != null ? dto.getItem_name() : "");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -176,6 +174,7 @@ public class ProductionPlacementController implements Initializable {
     }
 
     public void btnPlaceProductionOnAction(ActionEvent actionEvent) {
+
         placeProductionBO.placeProduction(
                 lblProductionId.getText(),
                 (String) cmbInventoryId.getSelectionModel().getSelectedItem(),
@@ -186,114 +185,7 @@ public class ProductionPlacementController implements Initializable {
                 Integer.parseInt(txtMaterialUsageQty.getText()),
                 Integer.parseInt(txtProductQty.getText()),
                 tblProductionPlacement
-        );
-        java.sql.Connection connection = null;
-        try {
-            connection = DBConnection.getInstance().getConnection();
-            connection.setAutoCommit(false);
-
-            // Prepare IDs and data
-            String productionId = lblProductionId.getText();
-            String inventoryId = (String) cmbInventoryId.getSelectionModel().getSelectedItem();
-            String productionDescription = txtProductionDescription.getText();
-            String productionStatus = "In Production";
-
-            String employeeId = (String) cmbEmployeeId.getSelectionModel().getSelectedItem();
-            String taskDescription = txtTaskDescription.getText();
-            String taskStatus = "In Progress";
-
-            String materialId = (String) cmbMaterialId.getSelectionModel().getSelectedItem();
-            int materialUsageQty = Integer.parseInt(txtMaterialUsageQty.getText());
-            int productQty = Integer.parseInt(txtProductQty.getText());
-
-            String productionTaskId = placeProductionBO.getNextProductionTaskId();
-            String taskId = placeProductionBO.getNextTaskId();
-            String usageId = placeProductionBO.getNextMaterialUsageId();
-
-            //Save new production
-            boolean productionSaved = placeProductionBO.saveProductions(
-                    new ProductionDto(
-                            productionId, inventoryId, productionDescription, productionStatus
-                    )
-            );
-            if (!productionSaved) {
-                connection.rollback();
-                new Alert(Alert.AlertType.ERROR, "Failed to save production!").show();
-                return;
-            }
-
-            //Save new task
-            boolean taskSaved = placeProductionBO.saveTasks(
-                    new TaskDto(
-                            taskId, employeeId, taskDescription, taskStatus
-                    )
-            );
-            if (!taskSaved) {
-                connection.rollback();
-                new Alert(Alert.AlertType.ERROR, "Failed to save task!").show();
-                return;
-            }
-
-            //Save new production_task
-            boolean productionTaskSaved = placeProductionBO.saveProductionTasks(
-                    new ProductionTaskDto(
-                            productionTaskId, productionId, taskId
-                    )
-            );
-            if (!productionTaskSaved) {
-                connection.rollback();
-                new Alert(Alert.AlertType.ERROR, "Failed to save production task!").show();
-                return;
-            }
-
-            //Save new material_usage
-            boolean materialUsageSaved = placeProductionBO.saveMaterialUsage(
-                    new MaterialUsageDto(
-                            usageId, productionId, materialId, materialUsageQty
-                    )
-            );
-            if (!materialUsageSaved) {
-                connection.rollback();
-                new Alert(Alert.AlertType.ERROR, "Failed to save material usage!").show();
-                return;
-            }
-
-            //Update material quantity (reduce)
-            boolean materialUpdated = placeProductionBO.reduceMaterialQty(materialId, materialUsageQty);
-            if (!materialUpdated) {
-                connection.rollback();
-                new Alert(Alert.AlertType.ERROR, "Failed to update material quantity!").show();
-                return;
-            }
-
-            //Update inventory quantity (increase)
-            boolean inventoryUpdated = placeProductionBO.increaseInventoryQty(inventoryId, productQty);
-            if (!inventoryUpdated) {
-                connection.rollback();
-                new Alert(Alert.AlertType.ERROR, "Failed to update inventory quantity!").show();
-                return;
-            }
-
-            //Commit transaction
-            connection.commit();
-            new Alert(Alert.AlertType.INFORMATION, "Production placed successfully!").show();
-            refreshPage();
-
-        } catch (Exception e) {
-            try {
-                if (connection != null) connection.rollback();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Error placing production!").show();
-        } finally {
-            try {
-                if (connection != null) connection.setAutoCommit(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        );        refreshPage();
     }
 
     public void btnAddToCartOnAction(ActionEvent actionEvent) {
@@ -312,90 +204,7 @@ public class ProductionPlacementController implements Initializable {
                 lblMaterialColorType,
                 tblProductionPlacement
         );
-        String employeeId = (String) cmbEmployeeId.getSelectionModel().getSelectedItem();
-        String inventoryId = (String) cmbInventoryId.getSelectionModel().getSelectedItem();
-        String materialId = (String) cmbMaterialId.getSelectionModel().getSelectedItem();
-        String productDescription = txtProductionDescription.getText();
-        String taskDescription = txtTaskDescription.getText();
-        String productQtyStr = txtProductQty.getText();
-        String materialUsageQtyStr = txtMaterialUsageQty.getText();
 
-        // Validate selections and inputs
-        if (employeeId == null || inventoryId == null || materialId == null ||
-                productDescription.isEmpty() || taskDescription.isEmpty() ||
-                productQtyStr.isEmpty() || materialUsageQtyStr.isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "Please fill all fields!").show();
-            return;
-        }
-
-        if (!productQtyStr.matches("\\d+") || !materialUsageQtyStr.matches("\\d+")) {
-            new Alert(Alert.AlertType.WARNING, "Enter valid numeric quantities!").show();
-            return;
-        }
-
-        int productQty = Integer.parseInt(productQtyStr);
-        int materialUsageQty = Integer.parseInt(materialUsageQtyStr);
-        int availableMaterialQty = Integer.parseInt(lblMaterialQty.getText());
-
-        if (materialUsageQty > availableMaterialQty) {
-            new Alert(Alert.AlertType.WARNING, "Not enough material quantity!").show();
-            return;
-        }
-
-        String employeeName = lblEmployeeName.getText();
-        String itemName = lblItemName.getText();
-        String materialName = lblMaterialName.getText();
-        String colorType = lblMaterialColorType.getText();
-
-        // Check if this item/material is already in the cart
-        for (ProductionCartTM cartTM : tblProductionPlacement.getItems()) {
-            if (cartTM.getItemName().equals(itemName) && cartTM.getMaterialName().equals(materialName)) {
-                int newProductQty = cartTM.getQuantity() + productQty;
-                int newMaterialUsageQty = cartTM.getQtyNeeded() + materialUsageQty;
-                if (newMaterialUsageQty > availableMaterialQty) {
-                    new Alert(Alert.AlertType.WARNING, "Not enough material quantity!").show();
-                    return;
-                }
-                cartTM.setQuantity(newProductQty);
-                cartTM.setQtyNeeded(newMaterialUsageQty);
-                tblProductionPlacement.refresh();
-                lblMaterialQty.setText(String.valueOf(availableMaterialQty - materialUsageQty));
-                return;
-            }
-        }
-
-        // Add new row to cart
-        Button removeBtn = new Button("Remove");
-
-
-        removeBtn.setOnAction(e -> {
-            tblProductionPlacement.getItems().remove(new ProductionCartTM(
-                employeeName,
-                itemName,
-                productDescription,
-                productQty,
-                taskDescription,
-                materialName,
-                materialUsageQty,
-                colorType,
-                removeBtn
-        ));
-            tblProductionPlacement.refresh();
-            // Optionally, restore material quantity in UI here
-        });
-
-        tblProductionPlacement.getItems().add(new ProductionCartTM(
-                employeeName,
-                itemName,
-                productDescription,
-                productQty,
-                taskDescription,
-                materialName,
-                materialUsageQty,
-                colorType,
-                removeBtn
-        ));
-        lblMaterialQty.setText(String.valueOf(availableMaterialQty - materialUsageQty));
     }
     private void navigateTo(String path) {
         try {
