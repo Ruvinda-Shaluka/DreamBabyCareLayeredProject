@@ -45,7 +45,7 @@ public class OrderItemController implements Initializable {
 
     private final String quantityRegex = "^\\d+$";
     private final String amountRegex = "^\\d+(\\.\\d{2})?$";
-    public TextField searchField;
+
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent) {
         navigateTo("/view/OverView.fxml");
