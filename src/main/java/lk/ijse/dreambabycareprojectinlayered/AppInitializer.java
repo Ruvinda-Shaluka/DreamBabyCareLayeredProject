@@ -14,11 +14,11 @@ import java.io.InputStream;
 public class AppInitializer extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/lk/ijse/dreambabycareprojectinlayered/assests/view/LoginView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/lk/ijse/dreambabycareprojectinlayered/assets/view/LoginView.fxml"));
         stage.setTitle("Dream Baby Care Products");
 
 
-        InputStream iconStream = getClass().getResourceAsStream("/lk/ijse/dreambabycareprojectinlayered/assests/images/dbcp logo.jpg");
+        InputStream iconStream = getClass().getResourceAsStream("/lk/ijse/dreambabycareprojectinlayered/assets/images/dbcp logo.jpg");
         if (iconStream != null) {
             Image icon = new Image(iconStream);
             stage.getIcons().add(icon);

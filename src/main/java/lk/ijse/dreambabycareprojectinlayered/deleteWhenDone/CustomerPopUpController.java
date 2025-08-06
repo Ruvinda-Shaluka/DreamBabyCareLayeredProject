@@ -1,12 +1,10 @@
-package lk.ijse.dreambabycareprojectinlayered.controller;
+package lk.ijse.dreambabycareprojectinlayered.deleteWhenDone;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.dreambabycareprojectinlayered.bo.BOFactory;
-import lk.ijse.dreambabycareprojectinlayered.bo.custom.CustomerBO;
-import lk.ijse.dreambabycareprojectinlayered.dto.CustomerDto;
+import lk.ijse.finalProject.dto.CustomerDto;
+import lk.ijse.finalProject.model.CustomerModel;
 
 import java.sql.SQLException;
 
@@ -18,13 +16,15 @@ public class CustomerPopUpController {
     public TextField txtAddress;
     public ComboBox cmbOrderPlatform;
     public Button btnSave;
+    public Button btnUpdate;
+    public Button btnDelete;
     public Button btnReset;
 
     private final String namePattern = "^[A-Za-z ]+$";
     private final String numberPattern = "^[0-9]{10}$";
     private final String addressPattern = "^[A-Za-z0-9 ,./-]+$";
 
-    private final CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.CUSTOMER);
+    private final CustomerModel customerModel = new CustomerModel();
 
     public void saveBtnOnAction(ActionEvent actionEvent) {
         String customerId = customerIdLabel.getText();
@@ -66,17 +66,18 @@ public class CustomerPopUpController {
             return;
         }
 
+        CustomerDto customerDto = new CustomerDto(
+                customerId,
+                name,
+                number,
+                address,
+                orderPlatform
+        );
+
         // Save the customer
         if (isValidName && isValidNumber && isValidAddress) {
             try {
-                boolean isSaved = customerBO.save(new CustomerDto(
-                        customerId,
-                        name,
-                        number,
-                        address,
-                        orderPlatform
-                ));
-
+                boolean isSaved = customerModel.saveCustomers(customerDto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.INFORMATION, "Customer saved successfully").show();
                     resetPage();
@@ -86,10 +87,12 @@ public class CustomerPopUpController {
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Failed to save customer").show();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
             }
         }
+    }
+
+    public void resetBtnOnAction(ActionEvent actionEvent) {
+        resetPage();
     }
 
     private void resetPage() {
@@ -103,16 +106,10 @@ public class CustomerPopUpController {
 
     private void loadNextId() {
         try {
-            String nextId = customerBO.generateNewId();
+            String nextId = customerModel.getNextCustomerId();
             customerIdLabel.setText(nextId);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
-    }
-
-    public void resetBtnOnAction(ActionEvent actionEvent) {
-        resetPage();
     }
 }

@@ -1,4 +1,4 @@
-package lk.ijse.dreambabycareprojectinlayered.controller;
+package lk.ijse.dreambabycareprojectinlayered.deleteWhenDone;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -9,102 +9,43 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.dreambabycareprojectinlayered.bo.BOFactory;
-import lk.ijse.dreambabycareprojectinlayered.bo.custom.DiscountBO;
-import lk.ijse.dreambabycareprojectinlayered.dto.DiscountDto;
-import lk.ijse.dreambabycareprojectinlayered.view.tdm.DiscountTM;
+import lk.ijse.finalProject.dto.DiscountDto;
+import lk.ijse.finalProject.dto.tm.DiscountTM;
+import lk.ijse.finalProject.model.DiscountModel;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class DiscountController implements Initializable {
     public AnchorPane ancDiscountContainer;
-    public TextField searchField;
+    public Label overViewLabelButton;
     public Label discountIdLabel;
     public ComboBox cmbPaymentId1;
-    public ComboBox cmbDiscountType1;
-    public TextField txtDiscountAmount;
-    public Button btnSave;
-    public Button btnUpdate;
-    public Button btnDelete;
     public Button btnReset;
-    public TableView<DiscountTM> tblDiscount;
-    public TableColumn<DiscountTM,String> colDiscountId;
-    public TableColumn<DiscountTM,String> colPaymentId;
-    public TableColumn<DiscountTM,String> colDiscountType;
-    public TableColumn<DiscountTM,String> colDiscountAmount;
+    public ComboBox cmbDiscountType1;
+    public Label lblAmount1;
+    public Button btnUpdate;
+    public TextField txtDiscountAmount;
+    public Button btnDelete;
+    public Button btnSave;
 
-    private final DiscountBO discountBO =(DiscountBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.DISCOUNT);
+    public TableView<DiscountTM> tblDiscount;
+    public TableColumn<DiscountTM, String> colDiscountId;
+    public TableColumn<DiscountTM, String> colPaymentId;
+    public TableColumn<DiscountTM, String> colDiscountType;
+    public TableColumn<DiscountTM, String> colDiscountAmount;
+
+    private final DiscountModel discountModel = new DiscountModel();
+    public TextField searchField;
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/OverView.fxml");
+        navigateTo("/view/OverView.fxml");
     }
 
-    public void search(KeyEvent keyEvent) {
-        String searchText = searchField.getText();
-        if (searchText.isEmpty()) {
-            try {
-                loadDiscountTableData();
-            } catch (Exception e) {
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Failed to load Discounts").show();
-            }
-        } else {
-            try {
-                tblDiscount.setItems(FXCollections.observableArrayList(
-                        discountBO.search(searchText)
-                                .stream()
-                                .map(discountDto -> new DiscountTM(
-                                        discountDto.getDiscount_id(),
-                                        discountDto.getPayment_id(),
-                                        discountDto.getDiscount_type(),
-                                        discountDto.getDiscount_percentage()
-                                ))
-                                .toList()
-                ));
-            } catch (Exception e) {
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Failed to load Discounts").show();
-            }
-        }
-    }
-
-    public void goToAddPaymentLabel(MouseEvent mouseEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/PaymentView.fxml");
-
-    }
-
-    public void saveBtnOnAction(ActionEvent actionEvent) {
-        String discountId = discountIdLabel.getText();
-        String paymentId = cmbPaymentId1.getSelectionModel().getSelectedItem().toString();
-        String discountType = cmbDiscountType1.getSelectionModel().getSelectedItem().toString();
-        double amount = Double.parseDouble(txtDiscountAmount.getText());
-
-        if (discountId.isEmpty() || paymentId.isEmpty() || discountType.isEmpty() || txtDiscountAmount.getText().isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "Please fill all the fields").show();
-            return;
-        }
-
-        try {
-            boolean isSaved = discountBO.save(new DiscountDto(
-                    discountId,
-                    paymentId,
-                    discountType,
-                    amount
-            ));
-
-            if (isSaved) {
-                new Alert(Alert.AlertType.INFORMATION, "Discount saved successfully").show();
-                loadNextId();
-                resetPage();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Failed to save Discount").show();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Failed to save Discount").show();
-        }
+    public void resetBtnOnAction(ActionEvent actionEvent) {
+        resetPage();
     }
 
     public void updateBtnOnAction(ActionEvent actionEvent) {
@@ -118,14 +59,14 @@ public class DiscountController implements Initializable {
             return;
         }
 
+        DiscountDto discountDto = new DiscountDto(
+                discountId,
+                paymentId,
+                discountType,
+                amount
+        );
         try {
-            boolean isUpdated = discountBO.update(new DiscountDto(
-                    discountId,
-                    paymentId,
-                    discountType,
-                    amount
-            ));
-
+            boolean isUpdated = discountModel.updateDiscounts(discountDto);
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Discount updated successfully").show();
                 loadDiscountTableData();
@@ -153,7 +94,7 @@ public class DiscountController implements Initializable {
         if (response.isPresent() && response.get() == ButtonType.YES) {
             String discountId = discountIdLabel.getText();
             try {
-                boolean isDeleted = discountBO.delete(discountId);
+                boolean isDeleted = discountModel.deleteDiscounts(discountId);
                 if (isDeleted) {
                     new Alert(Alert.AlertType.INFORMATION, "Discount deleted successfully").show();
                     loadDiscountTableData();
@@ -168,8 +109,36 @@ public class DiscountController implements Initializable {
         }
     }
 
-    public void resetBtnOnAction(ActionEvent actionEvent) {
-        resetPage();
+    public void saveBtnOnAction(ActionEvent actionEvent) {
+        String discountId = discountIdLabel.getText();
+        String paymentId = cmbPaymentId1.getSelectionModel().getSelectedItem().toString();
+        String discountType = cmbDiscountType1.getSelectionModel().getSelectedItem().toString();
+        double amount = Double.parseDouble(txtDiscountAmount.getText());
+
+        if (discountId.isEmpty() || paymentId.isEmpty() || discountType.isEmpty() || txtDiscountAmount.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please fill all the fields").show();
+            return;
+        }
+
+        DiscountDto discountDto = new DiscountDto(
+                discountId,
+                paymentId,
+                discountType,
+                amount
+        );
+        try {
+            boolean isSaved = discountModel.saveDiscounts(discountDto);
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION, "Discount saved successfully").show();
+                loadNextId();
+                resetPage();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Failed to save Discount").show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to save Discount").show();
+        }
     }
 
     public void onClickTable(MouseEvent mouseEvent) {
@@ -186,22 +155,6 @@ public class DiscountController implements Initializable {
         }
     }
 
-    private void navigateTo(String path) {
-        try {
-            ancDiscountContainer.getChildren().clear();
-
-            AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
-
-            anchorPane.prefWidthProperty().bind(ancDiscountContainer.widthProperty());
-            anchorPane.prefHeightProperty().bind(ancDiscountContainer.heightProperty());
-
-            ancDiscountContainer.getChildren().add(anchorPane);
-        } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Page not found..!").show();
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colDiscountId.setCellValueFactory(new PropertyValueFactory<>("discount_id"));
@@ -210,7 +163,7 @@ public class DiscountController implements Initializable {
         colDiscountAmount.setCellValueFactory(new PropertyValueFactory<>("discount_percentage"));
 
         try {
-            cmbPaymentId1.setItems(FXCollections.observableArrayList(discountBO.getAllPaymentIds()));
+            cmbPaymentId1.setItems(FXCollections.observableArrayList(discountModel.getAllPaymentIds()));
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to Payment Ids").show();
@@ -247,18 +200,9 @@ public class DiscountController implements Initializable {
 
     }
 
-    private void loadDiscountTypes() {
-        cmbDiscountType1.setItems(FXCollections.observableArrayList("Retail Online", "Retail Local", "Wholesale Online", "Wholesale Local"));
-    }
-
-    private void loadPaymentIds() throws Exception {
-        cmbPaymentId1.setItems(FXCollections.observableArrayList(discountBO.getAllPaymentIds()));
-
-    }
-
     private void loadNextId() {
         try {
-            String nextId = discountBO.generateNewId();
+            String nextId = discountModel.getNextDiscountId();
             discountIdLabel.setText(nextId);
         } catch (Exception e) {
             e.printStackTrace();
@@ -266,9 +210,9 @@ public class DiscountController implements Initializable {
         }
     }
 
-    private void loadDiscountTableData() throws Exception {
+    private void loadDiscountTableData() throws SQLException, ClassNotFoundException {
         tblDiscount.setItems(FXCollections.observableArrayList(
-                discountBO.loadAll()
+                discountModel.getAllDiscounts()
                         .stream()
                         .map(discountDto -> new DiscountTM(
                                 discountDto.getDiscount_id(),
@@ -278,11 +222,32 @@ public class DiscountController implements Initializable {
                         ))
                         .toList()
         ));
+
     }
 
-    private void resetPage(){
+    private void navigateTo(String path) {
         try {
-            discountIdLabel.setText("");
+            ancDiscountContainer.getChildren().clear();
+
+            AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
+
+            anchorPane.prefWidthProperty().bind(ancDiscountContainer.widthProperty());
+            anchorPane.prefHeightProperty().bind(ancDiscountContainer.heightProperty());
+
+            ancDiscountContainer.getChildren().add(anchorPane);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Page not found..!").show();
+            e.printStackTrace();
+        }
+    }
+
+    private void resetPage() {
+        try {
+
+            loadDiscountTableData();
+            loadNextId();
+
+            lblAmount1.setText("");
             cmbPaymentId1.getSelectionModel().clearSelection();
             cmbDiscountType1.getSelectionModel().clearSelection();
             txtDiscountAmount.setText("");
@@ -291,14 +256,52 @@ public class DiscountController implements Initializable {
             btnUpdate.setDisable(true);
             btnDelete.setDisable(true);
 
-            loadDiscountTableData();
-            loadNextId();
-            loadPaymentIds();
-            loadDiscountTypes();
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to Reset").show();
         }
     }
 
+    private void loadPaymentIds() throws SQLException, ClassNotFoundException {
+        cmbPaymentId1.setItems(FXCollections.observableArrayList(discountModel.getAllPaymentIds()));
+
+    }
+
+    private void loadDiscountTypes() {
+        cmbDiscountType1.setItems(FXCollections.observableArrayList("Retail Online", "Retail Local", "Wholesale Online", "Wholesale Local"));
+    }
+
+    public void search(KeyEvent keyEvent) {
+        String searchText = searchField.getText();
+        if (searchText.isEmpty()) {
+            try {
+                loadDiscountTableData();
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to load Discounts").show();
+            }
+        } else {
+            try {
+                tblDiscount.setItems(FXCollections.observableArrayList(
+                        discountModel.searchDiscounts(searchText)
+                                .stream()
+                                .map(discountDto -> new DiscountTM(
+                                        discountDto.getDiscount_id(),
+                                        discountDto.getPayment_id(),
+                                        discountDto.getDiscount_type(),
+                                        discountDto.getDiscount_percentage()
+                                ))
+                                .toList()
+                ));
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to load Discounts").show();
+            }
+        }
+    }
+
+    public void goToAddPaymentLabel(MouseEvent mouseEvent) {
+        navigateTo("/view/PaymentView.fxml");
+
+    }
 }
