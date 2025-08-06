@@ -83,6 +83,7 @@ public class OrderPlacementController implements Initializable {
                 cartData,
                 tblOrderPlacement
         );
+        resetWhenAddToCart();
     }
 
     public void btnResetOnAction(ActionEvent actionEvent) {
