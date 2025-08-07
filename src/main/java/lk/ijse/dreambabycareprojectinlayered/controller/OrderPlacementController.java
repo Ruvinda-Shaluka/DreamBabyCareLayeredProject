@@ -107,7 +107,7 @@ public class OrderPlacementController implements Initializable {
 
     public void goToCustomerPopUp(MouseEvent mouseEvent) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/CustomerPagePopUp.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/lk/ijse/dreambabycareprojectinlayered/assets/view/CustomerPagePopUp.fxml"));
             AnchorPane anchorPane = fxmlLoader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(anchorPane));

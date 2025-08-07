@@ -68,7 +68,6 @@ public class SignUpController implements Initializable {
         btnSignUp.setDisable(!(isValidName && isValidEmail && isValidPhone && isValidUserName && isValidPassword && isPasswordMatch));
     }
 
-
     public void btnGoBackToLoginOnAction(ActionEvent actionEvent) {
         try {
             Parent dashBoardRoot = FXMLLoader.load(getClass().getResource("/lk/ijse/dreambabycareprojectinlayered/assets/view/LoginView.fxml"));

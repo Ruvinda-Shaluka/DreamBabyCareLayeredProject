@@ -39,7 +39,7 @@ public class MaterialController implements Initializable {
     private final MaterialBO materialBO =(MaterialBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.MATERIAL);
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/OverView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/OverView.fxml");
     }
 
     public void search(KeyEvent keyEvent) {

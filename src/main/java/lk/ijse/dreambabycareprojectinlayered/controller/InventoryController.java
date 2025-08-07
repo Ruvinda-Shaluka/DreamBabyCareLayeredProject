@@ -45,7 +45,7 @@ public class InventoryController implements Initializable {
     private final InventoryBO inventoryBO =(InventoryBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.INVENTORY);
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/OverView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/OverView.fxml");
     }
 
     public void search(KeyEvent keyEvent) {

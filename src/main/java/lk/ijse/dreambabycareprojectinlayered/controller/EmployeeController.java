@@ -92,7 +92,7 @@ public class EmployeeController implements Initializable {
     }
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent)  {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/OverView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/OverView.fxml");
     }
 
     private void navigateTo(String path) {

@@ -166,7 +166,7 @@ public class ProductionPlacementController implements Initializable {
     }
 
     public void goToDashBoardPage(MouseEvent mouseEvent) {
-        navigateTo("/view/DashBoardView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/DashBoardView.fxml");
     }
 
     public void btnResetOnAction(ActionEvent actionEvent) {
@@ -206,6 +206,7 @@ public class ProductionPlacementController implements Initializable {
         );
 
     }
+
     private void navigateTo(String path) {
         try {
             ancProductionPlacementPage.getChildren().clear();

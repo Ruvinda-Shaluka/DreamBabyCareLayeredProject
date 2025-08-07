@@ -105,7 +105,7 @@ public class LoginController {
 
     public void visitSignUpPageOnAction(ActionEvent actionEvent) {
         try {
-            Parent dashBoardRoot = FXMLLoader.load(getClass().getResource("/view/SignUpView.fxml"));
+            Parent dashBoardRoot = FXMLLoader.load(getClass().getResource("/lk/ijse/dreambabycareprojectinlayered/assets/view/SignUpView.fxml"));
             Stage dashBoardStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             dashBoardStage.setScene(new Scene(dashBoardRoot));
             dashBoardStage.setTitle("Dream Baby Care Products");
