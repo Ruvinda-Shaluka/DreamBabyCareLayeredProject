@@ -1,6 +1,7 @@
 package lk.ijse.dreambabycareprojectinlayered.bo.mailer;
 
-import lk.ijse.finalProject.db.DBConnection;
+import lk.ijse.dreambabycareprojectinlayered.dao.custom.SQLUtil;
+import lk.ijse.dreambabycareprojectinlayered.db.DBConnection;
 import net.sf.jasperreports.engine.*;
 
 import java.io.File;
@@ -19,7 +20,7 @@ public class OrderReportMailer {
             if (lastOrderId == null) return false;
 
             // 2. Prepare Jasper report
-            String jrxmlPath = "/report/orderPlacementReport.jrxml";
+            String jrxmlPath = "/lk/ijse/dreambabycareprojectinlayered/assets/report/orderPlacementReport.jrxml";
             JasperReport report = JasperCompileManager.compileReport(
                     getClass().getResourceAsStream(jrxmlPath)
             );
@@ -54,7 +55,7 @@ public class OrderReportMailer {
     private static String getLastOrderId() throws Exception {
         String sql = "SELECT order_id FROM orders ORDER BY order_id DESC LIMIT 1";
         try (
-                ResultSet rs = CrudUtil.execute(sql)
+                ResultSet rs = SQLUtil.executeQuery(sql)
         ) {
             if (rs.next()) {
                 return rs.getString("order_id");

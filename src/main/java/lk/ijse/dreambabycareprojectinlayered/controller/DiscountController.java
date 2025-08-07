@@ -38,7 +38,7 @@ public class DiscountController implements Initializable {
     private final DiscountBO discountBO =(DiscountBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.DISCOUNT);
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/OverView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/OverView.fxml");
     }
 
     public void search(KeyEvent keyEvent) {

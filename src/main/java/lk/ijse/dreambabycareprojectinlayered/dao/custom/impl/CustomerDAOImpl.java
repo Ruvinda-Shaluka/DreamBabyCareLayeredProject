@@ -99,7 +99,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         try {
             ResultSet resultSet = SQLUtil.executeQuery("SELECT name FROM customer WHERE phone LIKE ?", "%" + contact + "%");
             while (resultSet.next()) {
-                customerNames.add(resultSet.getString("customer_id"));
+                customerNames.add(resultSet.getString("name"));
             }
             return customerNames;
         } catch (Exception e) {

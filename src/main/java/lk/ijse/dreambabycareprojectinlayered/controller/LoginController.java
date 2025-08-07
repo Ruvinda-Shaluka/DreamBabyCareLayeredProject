@@ -80,7 +80,7 @@ public class LoginController {
                         dashBoardStage.setMaximized(true);
                     });
                     dashBoardStage.show();*/
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DashboardView.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/lk/ijse/dreambabycareprojectinlayered/assets/view/DashboardView.fxml"));
                     Parent root = loader.load();
                     Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                     Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());

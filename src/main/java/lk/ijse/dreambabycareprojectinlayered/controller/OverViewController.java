@@ -10,63 +10,63 @@ public class OverViewController {
     public AnchorPane ancOverViewContainer;
 
     public void goToCustomerPageOnAction(ActionEvent actionEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/CustomerView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/CustomerView.fxml");
     }
 
     public void goToDiscountPageOnAction(ActionEvent actionEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/DiscountView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/DiscountView.fxml");
     }
 
     public void goToEmployeePageOnAction(ActionEvent actionEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/EmployeeView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/EmployeeView.fxml");
     }
 
     public void goToInventoryPageOnAction(ActionEvent actionEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/InventoryView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/InventoryView.fxml");
     }
 
     public void goToMaterialPageOnAction(ActionEvent actionEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/MaterialView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/MaterialView.fxml");
     }
 
     public void goToMaterialUsagePageOnAction(ActionEvent actionEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/MaterialUsageView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/MaterialUsageView.fxml");
     }
 
     public void goToOrderItemsPageOnAction(ActionEvent actionEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/OrderItemView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/OrderItemView.fxml");
     }
 
     public void goToOrdersPageOnAction(ActionEvent actionEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/OrdersView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/OrdersView.fxml");
     }
 
     public void goToPaymentsPageOnAction(ActionEvent actionEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/PaymentView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/PaymentView.fxml");
     }
 
     public void goToProductionPageOnAction(ActionEvent actionEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/ProductionView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/ProductionView.fxml");
     }
 
     public void goToProductionTaskPageOnAction(ActionEvent actionEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/ProductionTaskView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/ProductionTaskView.fxml");
     }
 
     public void goToShipmentPageOnAction(ActionEvent actionEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/ShipmentView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/ShipmentView.fxml");
     }
 
     public void goToSuppliersPageOnAction(ActionEvent actionEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/SupplierView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/SupplierView.fxml");
     }
 
     public void goToSuppliesPageOnAction(ActionEvent actionEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/SupplyView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/SupplyView.fxml");
     }
 
     public void goToTasksPageOnAction(ActionEvent actionEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/TaskView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/TaskView.fxml");
     }
     private void navigateTo(String path) {
         try {
@@ -87,6 +87,6 @@ public class OverViewController {
     }
 
     public void goToDashboard(MouseEvent mouseEvent) {
-        navigateTo("lk/ijse/dreambabycareprojectinlayered/assets/view/DashBoardView.fxml");
+        navigateTo("/lk/ijse/dreambabycareprojectinlayered/assets/view/DashBoardView.fxml");
     }
 }
